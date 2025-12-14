@@ -1,36 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo, deleteTodo } from "./todoSlice";
+import { addTodo, deleteTodo } from "./features/todo/todoSlice";
 import { useState } from "react";
 
 function App() {
   const [text, setText] = useState("");
-  const todos = useSelector((state) => state.todo);
+  const todos = useSelector((state) => state);
   const dispatch = useDispatch();
 
   return (
     <div>
-      <h3>To-Do List</h3>
-
-      <input
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <button
-        onClick={() => {
-          dispatch(addTodo(text));
-          setText("");
-        }}
-      >
-        Add
-      </button>
+      <input value={text} onChange={(e) => setText(e.target.value)} />
+      <button onClick={() => dispatch(addTodo(text))}>Add</button>
 
       <ul>
         {todos.map((t) => (
           <li key={t.id}>
             {t.text}
-            <button onClick={() => dispatch(deleteTodo(t.id))}>
-              X
-            </button>
+            <button onClick={() => dispatch(deleteTodo(t.id))}>X</button>
           </li>
         ))}
       </ul>
